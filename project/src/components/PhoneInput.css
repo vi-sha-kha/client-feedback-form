@@ -1,0 +1,86 @@
+/* Add this CSS in your CSS file or inside a <style> tag in your HTML */
+
+.form-control container{
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+/* Create a flex container for centering the PhoneInput */
+/* .phone-input-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+} */
+
+/* Add this CSS in your CSS file or inside a <style> tag in your HTML */
+
+/* Set the width of the select element on different screen sizes */
+/* Small devices (portrait phones, less than 576px) */
+@media all and (max-width: 575.98px) {
+    .form-control select {
+        width: 100%;
+    }
+}
+
+/* Medium devices (landscape phones, 576px and up) */
+@media all and (min-width: 576px) {
+    .form-control select {
+        width: 80%;
+        max-width: 400px;
+    }
+}
+
+/* Large devices (tablets, 768px and up) */
+@media all and (min-width: 768px) {
+    .form-control select {
+        width: 70%;
+        max-width: 500px;
+    }
+}
+
+/* Extra large devices (desktops, 992px and up) */
+@media all and (min-width: 992px) {
+    .form-control select {
+        width: 60%;
+        max-width: 600px;
+    }
+}
+
+/* Set the width of the input[type="tel"] element on different screen sizes */
+/* Small devices (portrait phones, less than 576px) */
+@media all and (max-width: 575.98px) {
+    .form-control input[type="tel"] {
+        width: 100%;
+    }
+}
+
+/* Medium devices (landscape phones, 576px and up) */
+@media all and (min-width: 576px) {
+    .form-control input[type="tel"] {
+        width: 80%;
+        max-width: 400px;
+    }
+}
+
+/* Large devices (tablets, 768px and up) */
+@media all and (min-width: 768px) {
+    .form-control input[type="tel"] {
+        width: 70%;
+        max-width: 500px;
+    }
+}
+
+/* Extra large devices (desktops, 992px and up) */
+@media all and (min-width: 992px) {
+    .form-control input[type="tel"] {
+        width: 60%;
+        max-width: 600px;
+    }
+}

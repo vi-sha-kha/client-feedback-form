@@ -1,3 +1,104 @@
+// import axios from "axios";
+// import React, { useEffect, useState } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+
+// const Edit = () => {
+//   const [id, setId] = useState(0);
+//   const [name, setName] = useState("");
+//   const [age, setAge] = useState("");
+//   const [email, setEmail] = useState("");
+
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     setId(localStorage.getItem("id"));
+//     setName(localStorage.getItem("name"));
+//     setAge(localStorage.getItem("age"));
+//     setEmail(localStorage.getItem("email"));
+//   }, []);
+
+//   // axios
+//   //   .post("https://647f2153c246f166da90216c.mockapi.io/crud")
+//   //   .then(() => {
+//   //     navigate("/");
+//   //   })
+//   //   .catch((err) => {
+//   //     console.log(err);
+//   //   });
+
+//   const handleUpdate = (e) => {
+//     e.preventDefault();
+//     axios
+//       .put(`https://647f2153c246f166da90216c.mockapi.io/crud/${id}`, {
+//         key_name: name,
+//         key_age: age,
+//         key_email: email,
+//       })
+//       .then(() => {
+//         navigate("/");
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+
+//   return (
+//     <>
+//       <div className="row">
+//         <div col-md-8>
+//           <div mb-2>
+//             <Link to="/">
+//               <button className="btn btn-dark">Read</button>
+//             </Link>
+//           </div>
+//           <form onSubmit={handleUpdate}>
+//             <div className="form-group">
+//               <label>Enter Name:</label>
+//               <input
+//                 type="text"
+//                 value={name}
+//                 onChange={(e) => setName(e.target.value)}
+//                 placeholder="Name"
+//                 className="form-control"
+//               />
+//             </div>
+//             <div className="form-group">
+//               <label>Enter Age:</label>
+//               <input
+//                 type="number"
+//                 value={age}
+//                 onChange={(e) => setAge(e.target.value)}
+//                 placeholder="Age"
+//                 className="form-control"
+//               />
+//             </div>
+//             <div className="form-group">
+//               <label>Enter Email:</label>
+//               <input
+//                 type="email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 placeholder="Email"
+//                 className="form-control"
+//               />
+//             </div>
+//             <div className="d-grid">
+//               <input
+//                 type="submit"
+//                 value="Update"
+//                 className="btn btn-success"
+//                 onSubmit={(e) => handleUpdate()}
+//               ></input>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Edit;
+
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -14,7 +115,6 @@ import PhoneInput, {
   //formatPhoneNumberIntl,
   isPossiblePhoneNumber,
 } from "react-phone-number-input/input";
-// import { Link } from "react-router-dom";
 //import "react-phone-number-input/style.css";
 
 const en = {
@@ -27,11 +127,13 @@ const FormComponent = () => {
   //const [number, setNumber] = useState("");
   const [value, setValue] = useState("");
   const [selected, setSelected] = useState("");
-  // const [onFocuseInput, setOnFocuseInput] = useState("");
+  const [onFocuseInput, setOnFocuseInput] = useState("");
 
   const [countries, setCountries] = useState(CountryData);
+  console.log("countries", countries);
 
   const [searchCode, setSearchCode] = useState();
+  console.log("searchCode", searchCode);
 
   const searchCountry = countries.find((obj) => {
     if (obj.code === searchCode) {
@@ -40,6 +142,7 @@ const FormComponent = () => {
     return false;
   });
 
+  console.log("searchCountry", searchCountry);
   const [country, setCountry] = useState();
   const [countryCode, setCountryCode] = React.useState("DE");
 
@@ -84,10 +187,10 @@ const FormComponent = () => {
     alignItems: "center",
   };
   const onSubmit = async (data) => {
+    console.log(data);
+
     try {
-      console.log(data);
       const res = await axios.post("http://localhost:3000/api/submit", data);
-      console.log("---------------");
       console.log(res.data);
       alert("Form submitted successfully!");
       reset(); // Reset the form after successful submission
@@ -104,7 +207,9 @@ const FormComponent = () => {
     setSelected_heard_from(value);
   };
 
-  useEffect(() => {}, [value]);
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
 
   return (
     <>
@@ -206,6 +311,7 @@ const FormComponent = () => {
                       onSelect={(code) => {
                         onChange(code);
                         setSelected(code);
+                        console.log("Selected country code:", code);
                         handleCountryChange(code);
                       }}
                       selected={selected}
@@ -265,7 +371,7 @@ const FormComponent = () => {
                       className="w-full h-14 text-xl rounded-lg col-span-2"
                     /> */}
               </div>
-              {/* <div className="col-5">
+              <div className="col-5">
                 <Controller
                   name="contact"
                   control={control}
@@ -314,7 +420,7 @@ const FormComponent = () => {
                     />
                   )}
                 />
-              </div> */}
+              </div>
             </div>
 
             {/* </div>
@@ -484,7 +590,6 @@ const FormComponent = () => {
               <small className="text-danger">{errors.message.message}</small>
             )}
           </div>
-
           <button type="submit" className="btn btn-success">
             Submit
           </button>

@@ -1,27 +1,27 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
   return (
     <>
       <nav
         className="navbar navbar-expand-lg navbar-light"
+        id="navbarNavAltMarkup"
         style={{ backgroundColor: "#7F9845" }}
       >
         <div className="container-fluid">
-          <NavLink className="navbar-brand" to="/">
-            <h2
-              style={{
-                fontSize: "40px",
-                fontWeight: "bold",
-                fontStyle: "italic",
-                color: "#fff",
-                fontFamily: "Playfair Display, serif",
-              }}
-            >
-              Feedback form
-            </h2>
-          </NavLink>
+          <h2
+            style={{
+              fontSize: "40px",
+              fontWeight: "bold",
+              fontStyle: "italic",
+              color: "#fff",
+              fontFamily: "Playfair Display, serif",
+            }}
+          >
+            Feedback form
+          </h2>
 
           <button
             className="navbar-toggler"
@@ -50,7 +50,25 @@ const Navbar = () => {
                     textDecoration: "underline",
                   }}
                 >
-                  Form
+                  Fill Feedback form
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  className="nav-link"
+                  to="/admin"
+                  activeClassName="active"
+                  style={{
+                    marginRight: "10px",
+                    fontWeight: "bold",
+                    color: "#fff",
+                    fontFamily: "Playfair Display, serif",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Admin login
                 </NavLink>
               </li>
             </ul>

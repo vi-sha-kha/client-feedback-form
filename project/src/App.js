@@ -9,12 +9,15 @@ import FormComponent2 from "./components/Justui";
 import LoginForm2 from "./components/admintry";
 import Show from "./components/Show";
 import Navbar from "./components/Navbar";
+import AutoPhoneApp from "./components/AutoPhoneApp";
+import Edit from "./components/Edit";
 
 function App() {
   //const apiEndpoint = "/api/login";
   return (
     <Router>
       <div className="App">
+        <Navbar />
         <Routes>
           {/* <Route
             path="/"
@@ -24,9 +27,12 @@ function App() {
           <Route path="/login" element={<LoginComponent />} />
           <Route path="/admin" element={<LoginForm2 />} />
           <Route path="/nav" element={<Navbar />} />
+          <Route path="/edit" element={<Edit />} />
+          {/* <Route path="/view" element={<View />} /> */}
 
           <Route path="/justui" element={<FormComponent2 />} />
           <Route path="/show" element={<Show />} />
+          <Route path="/try" element={<AutoPhoneApp />} />
         </Routes>
       </div>
     </Router>

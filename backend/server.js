@@ -87,6 +87,58 @@ app.post("/api/verify-token", (req, res) => {
   });
 });
 
+app.post("/api/submit", (req, res) => {
+  let id = req.body.id;
+  let name = req.body.name;
+  let email = req.body.email;
+  let age = req.body.age;
+  let contact = req.body.contact;
+
+  let satisfaction = req.body.selected_satisfaction;
+  let stand_out = req.body.stand_out;
+  let heard_from = req.body.selected_heard_from;
+  let message = req.body.message;
+
+  //const id = req.params.id;
+
+  // Insert the form data into the MySQL table
+  const query = `INSERT INTO new_table (id,name, email, age, contact, selected_satisfaction, stand_out, selected_heard_from, message) VALUES ('${id}','${name}', '${email}', '${age}', '${contact}',  '${satisfaction}','${stand_out}', '${heard_from}','${message}')`;
+  //const query = `INSERT INTO new_table [id, name,];
+  connection.query(query, (error) => {
+    if (error) {
+      console.error("Error storing form submission:", error);
+      return res.status(500).json({ message: error });
+    }
+    return res.status(200).json({ message: "Form submitted successfully" });
+  });
+});
+
+app.delete("/api/delete/:id", (req, res) => {
+  let id = req.body.id;
+  let name = req.body.name;
+  let email = req.body.email;
+  let age = req.body.age;
+  let contact = req.body.contact;
+
+  let satisfaction = req.body.selected_satisfaction;
+  let stand_out = req.body.stand_out;
+  let heard_from = req.body.selected_heard_from;
+  let message = req.body.message;
+
+  //const { id } = req.params;
+
+  // Insert the form data into the MySQL table
+  const query = `DELETE FROM new_table where id= ?`;
+
+  connection.query(query, id, (error) => {
+    if (error) {
+      console.error("Error storing form submission:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+    return res.status(200).json({ message: "Form data deleted successfully" });
+  });
+});
+
 app.post("/api/login", (req, res) => {
   const user = req.body.username;
   const password = req.body.password;
