@@ -6,14 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 import "./PhoneInput.css";
 
 import ReactFlagsSelect from "react-flags-select";
-import PhoneInput, {
-  getCountries,
-  parsePhoneNumber,
-  getCountryCallingCode,
-  //formatPhoneNumber,
-  //formatPhoneNumberIntl,
-  isPossiblePhoneNumber,
-} from "react-phone-number-input/input";
+// import PhoneInput, {
+//   getCountries,
+//   parsePhoneNumber,
+//   getCountryCallingCode,
+//   //formatPhoneNumber,
+//   //formatPhoneNumberIntl,
+//   isPossiblePhoneNumber,
+// } from "react-phone-number-input/input";
 // import { Link } from "react-router-dom";
 //import "react-phone-number-input/style.css";
 
@@ -57,8 +57,8 @@ const FormComponent = () => {
     register,
   } = useForm();
 
-  const [selected_satisfaction, setSelected_satisfaction] = React.useState("");
-  const [selected_heard_from, setSelected_heard_from] = React.useState("");
+  // const [selected_satisfaction, setSelected_satisfaction] = React.useState("");
+  // const [selected_heard_from, setSelected_heard_from] = React.useState("");
   const CountrySelect = ({ value, onChange, labels, ...rest }) => (
     <select
       {...rest}
@@ -96,13 +96,13 @@ const FormComponent = () => {
     }
   };
 
-  const handleSatisfactionChange = (value) => {
-    setSelected_satisfaction(value);
-  };
+  // const handleSatisfactionChange = (value) => {
+  //   setSelected_satisfaction(value);
+  // };
 
-  const handleHeardAboutChange = (value) => {
-    setSelected_heard_from(value);
-  };
+  // const handleHeardAboutChange = (value) => {
+  //   setSelected_heard_from(value);
+  // };
 
   useEffect(() => {}, [value]);
 
@@ -327,7 +327,7 @@ const FormComponent = () => {
           <h3 className="text-start">Are you satisfied with our services?</h3>
           <div className="d-flex justify-content-center">
             {/* ... (existing checkboxes with handleSatisfactionChange) */}
-
+            {/* 
             <div className="col col form-check form-check-inline">
               <input
                 className="form-check-input"
@@ -335,7 +335,10 @@ const FormComponent = () => {
                 id="very-unsatisfied"
                 value="Very Unsatisfied"
                 checked={selected_satisfaction === "Very Unsatisfied"}
-                onChange={() => handleSatisfactionChange("Very Unsatisfied")}
+                // onChange={() => handleSatisfactionChange("Very Unsatisfied")}
+                {...register("satisfaction", {
+                  required: "This field is required.",
+                })}
               />
               <label className="form-check-label" htmlFor="very-unsatisfied">
                 Very Unsatisfied
@@ -348,26 +351,40 @@ const FormComponent = () => {
                 id="unsatisfied"
                 value="Unsatisfied"
                 checked={selected_satisfaction === "Unsatisfied"}
-                onChange={() => handleSatisfactionChange("Unsatisfied")}
+                //onChange={() => handleSatisfactionChange("Unsatisfied")}
+                {...register("satisfaction", {
+                  required: "This field is required.",
+                })}
               />
               <label className="form-check-label" htmlFor="unsatisfied">
                 Unsatisfied
               </label>
-            </div>
+            </div> */}
             <div className="col col form-check form-check-inline">
-              <input
+              {/* <input
                 className="form-check-input"
                 type="checkbox"
                 id="neutral"
                 value="Neutral"
                 checked={selected_satisfaction === "Neutral"}
-                onChange={() => handleSatisfactionChange("Neutral")}
-              />
+                //onChange={() => handleSatisfactionChange("Neutral")}
+                {...register("satisfaction", {
+                  required: "This field is required.",
+                })}
+              /> */}
+              <input
+                {...register("food", { required: true })}
+                type="radio"
+                name="food"
+                value="Neutral"
+                className="form-check-input"
+                id="neutral"
+              />{" "}
               <label className="form-check-label" htmlFor="neutral">
                 Neutral
               </label>
             </div>
-            <div className="col col form-check form-check-inline">
+            {/* <div className="col col form-check form-check-inline">
               <input
                 className="form-check-input"
                 type="checkbox"
@@ -392,7 +409,7 @@ const FormComponent = () => {
               <label className="form-check-label" htmlFor="very-satisfied">
                 Very Satisfied
               </label>
-            </div>
+            </div> */}
           </div>
           <hr />
           <h3 className="text-start">
@@ -419,7 +436,10 @@ const FormComponent = () => {
                 id="Website"
                 value="Website"
                 checked={selected_heard_from === "Website"}
-                onChange={() => handleHeardAboutChange("Website")}
+                //onChange={() => handleHeardAboutChange("Website")}
+                {...register("heard_from", {
+                  required: "This field is required.",
+                })}
               />
               <label className="form-check-label" htmlFor="Social Media">
                 Website
