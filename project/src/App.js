@@ -11,6 +11,7 @@ import Show from "./components/Show";
 import Navbar from "./components/Navbar";
 import AutoPhoneApp from "./components/AutoPhoneApp";
 import Edit from "./components/Edit";
+import CustomRadioButton from "./components/CustomRadioBtn";
 
 function App() {
   //const apiEndpoint = "/api/login";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/justui" element={<FormComponent2 />} />
           <Route path="/show" element={<Show />} />
           <Route path="/try" element={<AutoPhoneApp />} />
+          <Route path="/radio" element={<CustomRadioButton />} />
         </Routes>
       </div>
     </Router>
