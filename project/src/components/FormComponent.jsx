@@ -194,9 +194,9 @@ const FormComponent = () => {
             </div>
           </div>
 
-          {/* <div className="row">
+          <div className="row">
             <div className="col-sm-6">
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <Controller
                   name="country"
                   control={control}
@@ -213,8 +213,8 @@ const FormComponent = () => {
                     />
                   )}
                 />
-              </div>
-            </div> */}
+              </div> */}
+            </div>
 
             {/* <div className="bg-white w-auto h-96 mx-5 mt-40 rounded-lg sm:w-full md:w-4/5 md:mx-auto lg:w-2/5 lg:mx-auto ">
             <div>

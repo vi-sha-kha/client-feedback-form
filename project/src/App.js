@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import AutoPhoneApp from "./components/AutoPhoneApp";
 import Edit from "./components/Edit";
 import CustomRadioButton from "./components/CustomRadioBtn";
+import View from "./components/View";
 
 function App() {
   //const apiEndpoint = "/api/login";
@@ -29,6 +30,8 @@ function App() {
           <Route path="/admin" element={<LoginForm2 />} />
           <Route path="/nav" element={<Navbar />} />
           <Route path="/edit" element={<Edit />} />
+          <Route path="/view" element={<View />} />
+
           {/* <Route path="/view" element={<View />} /> */}
 
           <Route path="/justui" element={<FormComponent2 />} />
