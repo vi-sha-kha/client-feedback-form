@@ -134,6 +134,8 @@ function CustomRadioButton() {
               value="Satisfied"
               className="form-check-input"
               id="satisfied"
+              checked={selected_satisfaction === "Satisfied"}
+              onChange={() => handleSatisfactionChange("Satisfied")}
             />{" "}
             Satisfied
           </label>

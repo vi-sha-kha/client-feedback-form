@@ -57,24 +57,25 @@ const FormComponent = () => {
     register,
   } = useForm();
 
-  // const [selected_satisfaction, setSelected_satisfaction] = React.useState("");
-  // const [selected_heard_from, setSelected_heard_from] = React.useState("");
-  const CountrySelect = ({ value, onChange, labels, ...rest }) => (
-    <select
-      {...rest}
-      value={value}
-      onChange={(event) => {
-        onChange(event.target.value || undefined);
-      }}
-    >
-      <option value="">country</option>
-      {getCountries().map((country) => (
-        <option key={country} value={country}>
-          {labels[country]} +{getCountryCallingCode(country)}
-        </option>
-      ))}
-    </select>
-  );
+  const [selected_satisfaction, setSelected_satisfaction] = React.useState("");
+  const [selected_heard_from, setSelected_heard_from] = React.useState("");
+
+  // const CountrySelect = ({ value, onChange, labels, ...rest }) => (
+  //   <select
+  //     {...rest}
+  //     value={value}
+  //     onChange={(event) => {
+  //       onChange(event.target.value || undefined);
+  //     }}
+  //   >
+  //     <option value="">country</option>
+  //     {getCountries().map((country) => (
+  //       <option key={country} value={country}>
+  //         {labels[country]} +{getCountryCallingCode(country)}
+  //       </option>
+  //     ))}
+  //   </select>
+  // );
   const labelStyle = {
     marginRight: "10px",
   };
@@ -96,13 +97,13 @@ const FormComponent = () => {
     }
   };
 
-  // const handleSatisfactionChange = (value) => {
-  //   setSelected_satisfaction(value);
-  // };
+  const handleSatisfactionChange = (value) => {
+    setSelected_satisfaction(value);
+  };
 
-  // const handleHeardAboutChange = (value) => {
-  //   setSelected_heard_from(value);
-  // };
+  const handleHeardAboutChange = (value) => {
+    setSelected_heard_from(value);
+  };
 
   useEffect(() => {}, [value]);
 
@@ -193,7 +194,7 @@ const FormComponent = () => {
             </div>
           </div>
 
-          <div className="row">
+          {/* <div className="row">
             <div className="col-sm-6">
               <div className="mb-3">
                 <Controller
@@ -213,7 +214,7 @@ const FormComponent = () => {
                   )}
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* <div className="bg-white w-auto h-96 mx-5 mt-40 rounded-lg sm:w-full md:w-4/5 md:mx-auto lg:w-2/5 lg:mx-auto ">
             <div>
@@ -260,10 +261,38 @@ const FormComponent = () => {
                   className="w-full h-14 text-xl rounded-lg form-control"
                 />
                 {/* <input
-                      type="tel"
-                      placeholder="Phone"
-                      className="w-full h-14 text-xl rounded-lg col-span-2"
-                    /> */}
+                  type="tel"
+                  placeholder="Phone"
+                  className="w-full h-14 text-xl rounded-lg col-span-2"
+                /> */}
+              </div>
+              <div className="col-md-4 mb-3" style={containerStyle}>
+                <Controller
+                  name="contact"
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: "This field is required.",
+                    pattern: {
+                      value:
+                        /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+                      message: "Invalid contact no..",
+                    },
+                  }}
+                  render={({ field }) => (
+                    <input
+                      type="contact"
+                      id="contact"
+                      className="form-control"
+                      {...field}
+                    />
+                  )}
+                />
+                {errors.contact && (
+                  <small className="text-danger">
+                    {errors.contact.message}
+                  </small>
+                )}
               </div>
               {/* <div className="col-5">
                 <Controller
@@ -327,89 +356,83 @@ const FormComponent = () => {
           <h3 className="text-start">Are you satisfied with our services?</h3>
           <div className="d-flex justify-content-center">
             {/* ... (existing checkboxes with handleSatisfactionChange) */}
-            {/* 
+
             <div className="col col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="very-unsatisfied"
-                value="Very Unsatisfied"
-                checked={selected_satisfaction === "Very Unsatisfied"}
-                // onChange={() => handleSatisfactionChange("Very Unsatisfied")}
-                {...register("satisfaction", {
-                  required: "This field is required.",
-                })}
-              />
-              <label className="form-check-label" htmlFor="very-unsatisfied">
-                Very Unsatisfied
+              <label htmlFor="very unsatisfied">
+                <input
+                  {...register("satisfaction", { required: true })}
+                  type="radio"
+                  name="satisfaction"
+                  value="Very unsatisfied"
+                  className="form-check-input"
+                  id="very unsatisfied"
+                  checked={selected_satisfaction === "Very unsatisfied"}
+                  onChange={() => handleSatisfactionChange("Very unsatisfied")}
+                />{" "}
+                Very unsatisfied
               </label>
             </div>
             <div className="col col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="unsatisfied"
-                value="Unsatisfied"
-                checked={selected_satisfaction === "Unsatisfied"}
-                //onChange={() => handleSatisfactionChange("Unsatisfied")}
-                {...register("satisfaction", {
-                  required: "This field is required.",
-                })}
-              />
-              <label className="form-check-label" htmlFor="unsatisfied">
+              <label htmlFor="unsatisfied">
+                <input
+                  {...register("satisfaction", { required: true })}
+                  type="radio"
+                  name="satisfaction"
+                  value="Unsatisfied"
+                  className="form-check-input"
+                  id="unsatisfied"
+                  checked={selected_satisfaction === "Unsatisfied"}
+                  onChange={() => handleSatisfactionChange("Unsatisfied")}
+                />{" "}
                 Unsatisfied
               </label>
-            </div> */}
+            </div>
             <div className="col col form-check form-check-inline">
-              {/* <input
-                className="form-check-input"
-                type="checkbox"
-                id="neutral"
-                value="Neutral"
-                checked={selected_satisfaction === "Neutral"}
-                //onChange={() => handleSatisfactionChange("Neutral")}
-                {...register("satisfaction", {
-                  required: "This field is required.",
-                })}
-              /> */}
-              <input
-                {...register("food", { required: true })}
-                type="radio"
-                name="food"
-                value="Neutral"
-                className="form-check-input"
-                id="neutral"
-              />{" "}
-              <label className="form-check-label" htmlFor="neutral">
+              <label htmlFor="neutral">
+                <input
+                  {...register("satisfaction", { required: true })}
+                  type="radio"
+                  name="satisfaction"
+                  value="Neutral"
+                  className="form-check-input"
+                  id="neutral"
+                  checked={selected_satisfaction === "Neutral"}
+                  onChange={() => handleSatisfactionChange("Neutral")}
+                />{" "}
                 Neutral
               </label>
             </div>
-            {/* <div className="col col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="satisfied"
-                value="Satisfied"
-                checked={selected_satisfaction === "Satisfied"}
-                onChange={() => handleSatisfactionChange("Satisfied")}
-              />
-              <label className="form-check-label" htmlFor="satisfied">
+
+            <div className="col col form-check form-check-inline">
+              <label htmlFor="satisfied">
+                <input
+                  {...register("satisfaction", { required: true })}
+                  type="radio"
+                  name="satisfaction"
+                  value="Satisfied"
+                  className="form-check-input"
+                  id="satisfied"
+                  checked={selected_satisfaction === "Satisfied"}
+                  onChange={() => handleSatisfactionChange("Satisfied")}
+                />{" "}
                 Satisfied
               </label>
             </div>
             <div className="col col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="very-satisfied"
-                value="Very Satisfied"
-                checked={selected_satisfaction === "Very Satisfied"}
-                onChange={() => handleSatisfactionChange("Very Satisfied")}
-              />
-              <label className="form-check-label" htmlFor="very-satisfied">
-                Very Satisfied
+              <label htmlFor="very satisfied">
+                <input
+                  {...register("satisfaction", { required: true })}
+                  type="radio"
+                  name="satisfaction"
+                  value="Very satisfied"
+                  className="form-check-input"
+                  id="very satisfied"
+                  checked={selected_satisfaction === "Very satisfied"}
+                  onChange={() => handleSatisfactionChange("Very satisfied")}
+                />{" "}
+                Very satisfied
               </label>
-            </div> */}
+            </div>
           </div>
           <hr />
           <h3 className="text-start">
@@ -430,57 +453,62 @@ const FormComponent = () => {
           <div className="d-flex justify-content-start">
             {/* ... (existing checkboxes with handleHeardAboutChange) */}
             <div className="col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="Website"
-                value="Website"
-                checked={selected_heard_from === "Website"}
-                //onChange={() => handleHeardAboutChange("Website")}
-                {...register("heard_from", {
-                  required: "This field is required.",
-                })}
-              />
-              <label className="form-check-label" htmlFor="Social Media">
+              <label htmlFor="website">
+                <input
+                  {...register("heard_from", { required: true })}
+                  type="radio"
+                  name="heard_from"
+                  value="Website"
+                  className="form-check-input"
+                  id="website"
+                  checked={selected_heard_from === "Website"}
+                  onChange={() => handleHeardAboutChange("Website")}
+                />{" "}
                 Website
               </label>
             </div>
             <div className="col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="Social Media"
-                value="Social Media"
-                checked={selected_heard_from === "Social Media"}
-                onChange={() => handleHeardAboutChange("Social Media")}
-              />
-              <label className="form-check-label" htmlFor="Social Media">
-                Social Media
+              <label htmlFor="social media">
+                <input
+                  {...register("heard_from", { required: true })}
+                  type="radio"
+                  name="heard_from"
+                  value="Social media"
+                  className="form-check-input"
+                  id="social media"
+                  checked={selected_heard_from === "Social media"}
+                  onChange={() => handleHeardAboutChange("Social media")}
+                />{" "}
+                Social media
               </label>
             </div>
             <div className="col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="Friends"
-                value="Friends"
-                checked={selected_heard_from === "Friends"}
-                onChange={() => handleHeardAboutChange("Friends")}
-              />
-              <label className="form-check-label" htmlFor="Friends">
+              <label htmlFor="friends">
+                <input
+                  {...register("heard_from", { required: true })}
+                  type="radio"
+                  name="heard_from"
+                  value="Friends"
+                  className="form-check-input"
+                  id="friends"
+                  checked={selected_heard_from === "Friends"}
+                  onChange={() => handleHeardAboutChange("Friends")}
+                />{" "}
                 Friends
               </label>
             </div>
             <div className="col form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="Others"
-                value="Others"
-                checked={selected_heard_from === "Others"}
-                onChange={() => handleHeardAboutChange("Others")}
-              />
-              <label className="form-check-label" htmlFor="Others">
+              <label htmlFor="others">
+                <input
+                  {...register("heard_from", { required: true })}
+                  type="radio"
+                  name="heard_from"
+                  value="Others"
+                  className="form-check-input"
+                  id="others"
+                  checked={selected_heard_from === "Others"}
+                  onChange={() => handleHeardAboutChange("Others")}
+                />{" "}
                 Others
               </label>
             </div>
