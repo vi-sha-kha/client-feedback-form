@@ -113,6 +113,44 @@ app.post("/api/submit", (req, res) => {
   });
 });
 
+app.get("/api/data/:id", (req, res) => {
+  const id = req.params.id;
+
+  // Retrieve data from the MySQL table for the given user ID
+  const query = "SELECT * FROM new_table WHERE id = ?";
+  connection.query(query, [id], (error, result) => {
+    if (error) {
+      console.error("Error retrieving data from MySQL:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "User ID not found" });
+    }
+
+    return res.status(200).json(result[0]);
+  });
+});
+
+app.put("/api/update/:id", (req, res) => {
+  const id = req.params.id;
+
+  // Retrieve data from the MySQL table for the given user ID
+  const query = "SELECT * FROM new_table WHERE id = ?";
+  connection.query(query, [id], (error, result) => {
+    if (error) {
+      console.error("Error retrieving data from MySQL:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "User ID not found" });
+    }
+
+    return res.status(200).json(result[0]);
+  });
+});
+
 app.delete("/api/delete/:id", (req, res) => {
   let id = req.body.id;
   let name = req.body.name;

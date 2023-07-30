@@ -30,7 +30,7 @@ function App() {
           <Route path="/admin" element={<LoginForm2 />} />
           <Route path="/nav" element={<Navbar />} />
           <Route path="/edit" element={<Edit />} />
-          <Route path="/view" element={<View />} />
+          <Route path="/view/:id" element={<View />} />
 
           {/* <Route path="/view" element={<View />} /> */}
 
