@@ -88,6 +88,8 @@ const FormComponent = () => {
     try {
       data.selected_satisfaction = selected_satisfaction;
       data.selected_heard_from = selected_heard_from;
+      data.country = searchCountry.name; // Add the selected country name
+      data.countryCode = searchCountry.dial_code;
       console.log(data);
       const res = await axios.post("http://localhost:3000/api/submit", data);
       console.log("---------------");
