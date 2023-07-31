@@ -86,6 +86,8 @@ const FormComponent = () => {
   };
   const onSubmit = async (data) => {
     try {
+      data.selected_satisfaction = selected_satisfaction;
+      data.selected_heard_from = selected_heard_from;
       console.log(data);
       const res = await axios.post("http://localhost:3000/api/submit", data);
       console.log("---------------");
