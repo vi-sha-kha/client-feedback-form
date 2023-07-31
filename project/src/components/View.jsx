@@ -148,6 +148,7 @@ const View = () => {
                   id="name"
                   className="form-control"
                   {...field}
+                  disabled
                 />
               )}
             />
@@ -176,6 +177,7 @@ const View = () => {
                   id="email"
                   className="form-control"
                   {...field}
+                  disabled
                 />
               )}
             />
@@ -200,6 +202,7 @@ const View = () => {
                   message: "Invalid age",
                 },
               })}
+              disabled
             />
             {errors.age && (
               <small className="text-danger">{errors.age.message}</small>
@@ -272,6 +275,7 @@ const View = () => {
                 type="tel"
                 placeholder="Code"
                 className="w-full h-14 text-xl rounded-lg form-control"
+                disabled
               />
               {/* <input
                   type="tel"
@@ -297,6 +301,7 @@ const View = () => {
                     id="contact"
                     className="form-control"
                     {...field}
+                    disabled
                   />
                 )}
               />
@@ -460,6 +465,7 @@ const View = () => {
             required: "This field is required.",
           })}
           defaultValue={formData.stand_out}
+          disabled
         />
         {errors.stand_out && (
           <small className="text-danger">{errors.stand_out.message}</small>
@@ -548,6 +554,7 @@ const View = () => {
               required: "This field is required.",
             })}
             defaultValue={formData.message}
+            disabled
           />
           {errors.message && (
             <small className="text-danger">{errors.message.message}</small>
