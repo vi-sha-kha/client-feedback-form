@@ -48,7 +48,7 @@ app.post("/api/token", (req, res) => {
       console.log("Login Successful");
       console.log("Generating accessToken");
       const token = jwt.sign({ user: user }, "secret", {
-        expiresIn: "5m",
+        expiresIn: "15m",
       });
       console.log(token);
       res.json({ accessToken: token });
@@ -152,18 +152,7 @@ app.put("/api/update/:id", (req, res) => {
 });
 
 app.delete("/api/delete/:id", (req, res) => {
-  let id = req.body.id;
-  let name = req.body.name;
-  let email = req.body.email;
-  let age = req.body.age;
-  let contact = req.body.contact;
-
-  let satisfaction = req.body.selected_satisfaction;
-  let stand_out = req.body.stand_out;
-  let heard_from = req.body.selected_heard_from;
-  let message = req.body.message;
-
-  //const { id } = req.params;
+  const { id } = req.params;
 
   // Insert the form data into the MySQL table
   const query = `DELETE FROM new_table where id= ?`;
