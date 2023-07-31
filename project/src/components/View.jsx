@@ -101,10 +101,10 @@ const View = () => {
         setValue("message", response.data.message);
         // Set other form field values similarly
         // Set selected values for radio buttons
-        console.log("Satisfaction:", response.data.satisfaction);
-        console.log("Heard From:", response.data.heard_from);
-        setSelected_satisfaction(response.data.satisfaction);
-        setSelected_heard_from(response.data.heard_from);
+        console.log("Satisfaction:", response.data.selected_satisfaction);
+        console.log("Heard From:", response.data.selected_heard_from);
+        setSelected_satisfaction(response.data.selected_satisfaction);
+        setSelected_heard_from(response.data.selected_heard_from);
         setCountryCode(response.data.countryCode);
         countries.find((obj) => {
           if (obj.dial_code === countryCode) {
@@ -246,6 +246,7 @@ const View = () => {
                     setSearchCode(e.target.value);
                   }}
                   className="h-14 text-xl rounded-lg m-3 col-md-6"
+                  disabled
                 >
                   <option value="" hidden>
                     --Select Country--
