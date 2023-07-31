@@ -31,8 +31,11 @@ const View = () => {
 
   const handleCountryChange = (code) => {
     setSelected(code);
+    setCountry(code);
+
     // Update the country code in the phone input
     setCountryCode(code);
+    setSearchCode(code);
   };
 
   const {
@@ -105,6 +108,10 @@ const View = () => {
         console.log("Heard From:", response.data.selected_heard_from);
         setSelected_satisfaction(response.data.selected_satisfaction);
         setSelected_heard_from(response.data.selected_heard_from);
+        //setCountries(response.data.country);
+        setSearchCode(response.data.countryCode);
+        setCountry(response.data.country);
+        setSelected(response.data.country);
         setCountryCode(response.data.countryCode);
         countries.find((obj) => {
           if (obj.dial_code === countryCode) {
@@ -120,7 +127,7 @@ const View = () => {
       .catch((error) => {
         console.error("Error fetching form data:", error);
       });
-  }, [id, setValue]); // Include setValue in the dependency array
+  }, [id, setValue, setSearchCode, setCountryCode]); // Include setValue in the dependency array
 
   return (
     <div>
