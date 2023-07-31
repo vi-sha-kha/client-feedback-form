@@ -113,14 +113,6 @@ const View = () => {
         setCountry(response.data.country);
         setSelected(response.data.country);
         setCountryCode(response.data.countryCode);
-        countries.find((obj) => {
-          if (obj.dial_code === countryCode) {
-            setSearchCode(obj.code);
-            return true;
-          }
-          return false;
-        });
-        console.log(countries);
 
         // console.log("abc", abc, selected);
       })
@@ -249,32 +241,7 @@ const View = () => {
             style={containerStyle}
           >
             <div className="row g-0">
-              <div className="col-12">
-                <select
-                  value={searchCode}
-                  onChange={(e) => {
-                    setSearchCode(e.target.value);
-                  }}
-                  className="h-14 text-xl rounded-lg m-3 col-md-6"
-                  disabled
-                >
-                  <option value="" hidden>
-                    --Select Country--
-                  </option>
-
-                  {countries.map((item) => {
-                    return (
-                      <option
-                        key={uuidv4()}
-                        value={item.code}
-                        selected={item.code === countryCode ? "selected" : ""}
-                      >
-                        {item.name}{" "}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
+              <div className="col-12">{country}</div>
             </div>
             <div className="col-2">
               <input
