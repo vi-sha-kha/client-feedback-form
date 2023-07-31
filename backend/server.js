@@ -137,7 +137,8 @@ app.put("/api/update/:id", (req, res) => {
   const id = req.params.id;
 
   // Retrieve data from the MySQL table for the given user ID
-  const query = "SELECT * FROM new_table WHERE id = ?";
+  const query =
+    "UPDATE  new_table SET name=?, email=?, age=?, country=?, countryCode=?, contact=?, selected_satisfaction=?, stand_out=?, selected_heard_from=?, message=? WHERE id = ?";
   connection.query(query, [id], (error, result) => {
     if (error) {
       console.error("Error retrieving data from MySQL:", error);

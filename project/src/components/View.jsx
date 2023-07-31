@@ -99,13 +99,23 @@ const View = () => {
         setValue("stand_out", response.data.stand_out);
 
         setValue("message", response.data.message);
-
         // Set other form field values similarly
         // Set selected values for radio buttons
         console.log("Satisfaction:", response.data.satisfaction);
         console.log("Heard From:", response.data.heard_from);
         setSelected_satisfaction(response.data.satisfaction);
         setSelected_heard_from(response.data.heard_from);
+        setCountryCode(response.data.countryCode);
+        countries.find((obj) => {
+          if (obj.dial_code === countryCode) {
+            setSearchCode(obj.code);
+            return true;
+          }
+          return false;
+        });
+        console.log(countries);
+
+        // console.log("abc", abc, selected);
       })
       .catch((error) => {
         console.error("Error fetching form data:", error);
@@ -232,24 +242,23 @@ const View = () => {
               <div className="col-12">
                 <select
                   value={searchCode}
-                  onChange={(e) => setSearchCode(e.target.value)}
+                  onChange={(e) => {
+                    setSearchCode(e.target.value);
+                  }}
                   className="h-14 text-xl rounded-lg m-3 col-md-6"
                 >
                   <option value="" hidden>
                     --Select Country--
                   </option>
+
                   {countries.map((item) => {
                     return (
-                      <option key={uuidv4()} value={item.code}>
+                      <option
+                        key={uuidv4()}
+                        value={item.code}
+                        selected={item.code === countryCode ? "selected" : ""}
+                      >
                         {item.name}{" "}
-                        <ReactFlagsSelect
-                          selected={item.code}
-                          countries={[item.code]}
-                          customLabels={en} // Define your custom country labels if needed
-                          onSelect={(code) => {
-                            setSearchCode(code); // Update the selected code when a flag is clicked
-                          }}
-                        />
                       </option>
                     );
                   })}
@@ -258,7 +267,7 @@ const View = () => {
             </div>
             <div className="col-2">
               <input
-                value={(searchCountry && searchCountry.dial_code) || ""}
+                value={(searchCountry && searchCountry.dial_code) || searchCode}
                 type="tel"
                 placeholder="Code"
                 className="w-full h-14 text-xl rounded-lg form-control"
