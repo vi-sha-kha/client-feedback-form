@@ -128,6 +128,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Show = () => {
   const [shows, setShows] = useState([]);
@@ -214,8 +215,9 @@ const Show = () => {
 
   const deleteContact = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      axios.delete(`"http://localhost:3000/api/delete/${id}"`);
+      axios.delete(`http://localhost:3000/api/delete/${id}`);
       console.log("Form data deleted successfully.");
+      toast.success("Deleted successfully");
       setTimeout(() => fetchAllShows(), 500);
     }
   };
