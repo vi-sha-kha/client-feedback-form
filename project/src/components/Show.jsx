@@ -172,8 +172,8 @@ const Show = () => {
           if (response.data.valid) {
             // Token is valid, fetch the data
             fetchAllShows();
-            // Check token expiration every 10 seconds
-            setInterval(() => checkTokenExpiration(accessToken), 1000);
+            // Check token expiration every 4 minutes
+            setInterval(() => checkTokenExpiration(accessToken), 240000);
           } else {
             // If the token is invalid or expired, redirect to login page
             console.log("Token invalid or expired. Redirecting to login page.");

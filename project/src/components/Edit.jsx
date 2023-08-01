@@ -3,44 +3,11 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import CountryData from "./CountryData.json";
-import { v4 as uuidv4 } from "uuid";
 import "./PhoneInput.css";
-
-import ReactFlagsSelect from "react-flags-select";
-
-// const initialState = {
-//   name: "",
-//   email: "",
-//   age: "",
-//   country: "",
-//   countryCode: "",
-//   contact: "",
-//   selected_satisfaction: "",
-//   stand_out: "",
-//   selected_heard_from: "",
-//   message: "",
-// };
 const Edit = () => {
-  // const [state, setState] = useState(initialState);
-  // const {
-  //   name,
-  //   email,
-  //   age,
-  //   country,
-  //   countryCode,
-  //   contact,
-  //   selected_satisfaction,
-  //   stand_out,
-  //   selected_heard_from,
-  //   message,
-  // } = state;
   const [formData, setFormData] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
-
-  //const [value, setValue] = useState("");
-  const [selected, setSelected] = useState("");
-  // const [onFocuseInput, setOnFocuseInput] = useState("");
 
   const [countries, setCountries] = useState(CountryData);
 
@@ -53,12 +20,10 @@ const Edit = () => {
     return false;
   });
 
-  const [country, setCountry] = useState();
   const [countryCode, setCountryCode] = React.useState("DE");
 
   const handleCountryChange = (code) => {
-    setSelected(code);
-    setCountry(code);
+    setCountries(CountryData);
 
     // Update the country code in the phone input
     setCountryCode(code);
@@ -101,11 +66,11 @@ const Edit = () => {
     alignItems: "center",
   };
 
-  const en = {
-    NP: "Nepal",
-    DE: "Germany",
-    // Add more country labels as needed...
-  };
+  // const en = {
+  //   NP: "Nepal",
+  //   DE: "Germany",
+  //   // Add more country labels as needed...
+  // };
 
   const handleSatisfactionChange = (value) => {
     setSelected_satisfaction(value);
@@ -120,6 +85,7 @@ const Edit = () => {
     axios
       .get(`http://localhost:3000/api/data/${id}`)
       .then((response) => {
+        console.log("data came to edit page", response.data);
         setFormData(response.data);
         // Set form field values after data is fetched
         setValue("name", response.data.name);
@@ -132,69 +98,31 @@ const Edit = () => {
         setValue("message", response.data.message);
         // Set other form field values similarly
         // Set selected values for radio buttons
-        console.log("Satisfaction:", response.data.selected_satisfaction);
-        console.log("Heard From:", response.data.selected_heard_from);
+        // console.log("Satisfaction:", response.data.selected_satisfaction);
+        // console.log("Heard From:", response.data.selected_heard_from);
         setSelected_satisfaction(response.data.selected_satisfaction);
         setSelected_heard_from(response.data.selected_heard_from);
+        // setSearchCode(response.data.countryCode);
         //setCountries(response.data.country);
-        setSearchCode(response.data.countryCode);
-        setCountry(response.data.country);
-        setSelected(response.data.country);
+        // setSelected(response.data.country);
         setCountryCode(response.data.countryCode);
-        countries.find((obj) => {
-          if (obj.dial_code === countryCode) {
+
+        // console.log(countries);
+
+        CountryData.find((obj) => {
+          if (obj.dial_code === response.data.countryCode) {
+            console.log(obj.code);
             setSearchCode(obj.code);
             return true;
           }
           return false;
         });
-        console.log(countries);
-
-        // console.log("abc", abc, selected);
+        //console.log("abc", abc, selected);
       })
       .catch((error) => {
         console.error("Error fetching form data:", error);
       });
-
-    // axios
-    //   .put(`http://localhost:3000/api/data/${id}`, data)
-    //   .then((response) => {
-    //     setFormData(response.data);
-    //     // Set form field values after data is fetched
-    //     setValue("name", response.data.name);
-    //     setValue("email", response.data.email);
-    //     setValue("age", response.data.age);
-    //     setValue("contact", response.data.contact);
-
-    //     setValue("stand_out", response.data.stand_out);
-
-    //     setValue("message", response.data.message);
-    //     // Set other form field values similarly
-    //     // Set selected values for radio buttons
-    //     console.log("Satisfaction:", response.data.selected_satisfaction);
-    //     console.log("Heard From:", response.data.selected_heard_from);
-    //     setSelected_satisfaction(response.data.selected_satisfaction);
-    //     setSelected_heard_from(response.data.selected_heard_from);
-    //     //setCountries(response.data.country);
-    //     setSearchCode(response.data.countryCode);
-    //     setCountry(response.data.country);
-    //     setSelected(response.data.country);
-    //     setCountryCode(response.data.countryCode);
-    //     countries.find((obj) => {
-    //       if (obj.dial_code === countryCode) {
-    //         setSearchCode(obj.code);
-    //         return true;
-    //       }
-    //       return false;
-    //     });
-    //     console.log(countries);
-
-    //     // console.log("abc", abc, selected);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching form data:", error);
-    //   });
-  }, [id, setValue, setSearchCode, setCountryCode]); // Include setValue in the dependency array
+  }, [id, setValue]); // Include setValue in the dependency array
 
   const onSubmit = (data) => {
     // Perform the update operation to the backend API using Axios
@@ -302,31 +230,6 @@ const Edit = () => {
         </div>
 
         <div className="row">
-          <div className="col-sm-6">
-            {/* <div className="mb-3">
-                <Controller
-                  name="country"
-                  control={control}
-                  render={({ field: { onChange, onBlur, value, ref } }) => (
-                    <ReactFlagsSelect
-                      value={value}
-                      onChange={onChange}
-                      onSelect={(code) => {
-                        onChange(code);
-                        setSelected(code);
-                        handleCountryChange(code);
-                      }}
-                      selected={selected}
-                    />
-                  )}
-                />
-              </div> */}
-          </div>
-
-          {/* <div className="bg-white w-auto h-96 mx-5 mt-40 rounded-lg sm:w-full md:w-4/5 md:mx-auto lg:w-2/5 lg:mx-auto ">
-            <div>
-              <div className=" mt-14 mx-10"> */}
-
           <div
             className="form-control col-md-4 col-sm-4 m-3"
             //style={{ display: "flex", alignItems: "center" }}
@@ -338,6 +241,7 @@ const Edit = () => {
                   value={searchCode}
                   onChange={(e) => {
                     setSearchCode(e.target.value);
+                    handleCountryChange(e.target.value);
                   }}
                   className="h-14 text-xl rounded-lg m-3 col-md-6"
                 >
@@ -348,7 +252,8 @@ const Edit = () => {
                   {countries.map((item) => {
                     return (
                       <option
-                        key={uuidv4()}
+                        // key={uuidv4()}
+                        key={item.code}
                         value={item.code}
                         selected={item.code === countryCode ? "selected" : ""}
                       >
@@ -361,16 +266,13 @@ const Edit = () => {
             </div>
             <div className="col-2">
               <input
-                value={(searchCountry && searchCountry.dial_code) || searchCode}
+                value={
+                  (searchCountry && searchCountry.dial_code) || countryCode
+                }
                 type="tel"
                 placeholder="Code"
                 className="w-full h-14 text-xl rounded-lg form-control"
               />
-              {/* <input
-                  type="tel"
-                  placeholder="Phone"
-                  className="w-full h-14 text-xl rounded-lg col-span-2"
-                /> */}
             </div>
             <div className="col-md-4 mb-3" style={containerStyle}>
               <Controller
@@ -397,61 +299,7 @@ const Edit = () => {
                 <small className="text-danger">{errors.contact.message}</small>
               )}
             </div>
-            {/* <div className="col-5">
-                <Controller
-                  name="contact"
-                  control={control}
-                  defaultValue=""
-                  className="col-12 form-control"
-                  rules={{
-                    required: "This field is required.",
-
-                    validate: {
-                      isValid: (value) => {
-                        if (value) {
-                          const callingCode =
-                            getCountryCallingCode(countryCode);
-                          if (!new RegExp(`^\\+${callingCode}$`).test(value)) {
-                            return !!parsePhoneNumber(value);
-                          }
-                        }
-                        return true;
-                      },
-                    },
-                  }}
-                  render={({ field }) => (
-                    <PhoneInput
-                      {...field}
-                      placeholder="Enter Phone Number"
-                      defaultCountry="NP" // Set the default country (change to your desired default)
-                      //country={country}
-                      onCountryChange={(v) => setCountryCode(v)}
-                      className={
-                        value && isPossiblePhoneNumber(value)
-                          ? "text-success"
-                          : "text-danger"
-                      }
-                      international={true}
-                      limitMaxLength={true}
-                      value={value}
-                      countryCodeEditable={false}
-                      onChange={(value) => {
-                        setValue(value);
-                      }}
-                      error={
-                        value && isPossiblePhoneNumber(value)
-                          ? "Not a possible number"
-                          : "Possible number"
-                      }
-                    />
-                  )}
-                />
-              </div> */}
           </div>
-
-          {/* </div>
-            </div>
-          </div> */}
 
           <hr />
         </div>

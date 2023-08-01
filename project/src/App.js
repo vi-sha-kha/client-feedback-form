@@ -29,7 +29,7 @@ function App() {
           <Route path="/login" element={<LoginComponent />} />
           <Route path="/admin" element={<LoginForm2 />} />
           <Route path="/nav" element={<Navbar />} />
-          <Route path="/edit" element={<Edit />} />
+          <Route path="/edit/:id" element={<Edit />} />
           <Route path="/view/:id" element={<View />} />
 
           {/* <Route path="/view" element={<View />} /> */}
