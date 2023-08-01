@@ -133,24 +133,52 @@ app.get("/api/data/:id", (req, res) => {
   });
 });
 
-app.put("/api/update/:id", (req, res) => {
+app.put("/api/data/:id", (req, res) => {
   const id = req.params.id;
-
+  const {
+    name,
+    email,
+    age,
+    country,
+    countryCode,
+    contact,
+    selected_satisfaction,
+    stand_out,
+    selected_heard_from,
+    message,
+  } = req.body;
+  console.log(req.body);
   // Retrieve data from the MySQL table for the given user ID
   const query =
     "UPDATE  new_table SET name=?, email=?, age=?, country=?, countryCode=?, contact=?, selected_satisfaction=?, stand_out=?, selected_heard_from=?, message=? WHERE id = ?";
-  connection.query(query, [id], (error, result) => {
-    if (error) {
-      console.error("Error retrieving data from MySQL:", error);
-      return res.status(500).json({ message: "Internal server error" });
-    }
+  connection.query(
+    query,
+    [
+      name,
+      email,
+      age,
+      country,
+      countryCode,
+      contact,
+      selected_satisfaction,
+      stand_out,
+      selected_heard_from,
+      message,
+      id,
+    ],
+    (error, result) => {
+      if (error) {
+        console.error("Error retrieving data from MySQL:", error);
+        return res.status(500).json({ message: "Internal server error" });
+      }
 
-    if (result.length === 0) {
-      return res.status(404).json({ message: "User ID not found" });
-    }
+      if (result.length === 0) {
+        return res.status(404).json({ message: "User ID not found" });
+      }
 
-    return res.status(200).json(result[0]);
-  });
+      return res.status(200).json(result[0]);
+    }
+  );
 });
 
 app.delete("/api/delete/:id", (req, res) => {
