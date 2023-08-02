@@ -164,28 +164,40 @@ const Show = () => {
       navigate("/admin");
     } else {
       // Verify the token with the server
-      axios
-        .post("http://localhost:3000/api/verify-token", {
-          accessToken: accessToken,
-        })
-        .then((response) => {
-          if (response.data.valid) {
-            // Token is valid, fetch the data
-            fetchAllShows();
-            // Check token expiration every 4 minutes
-            setInterval(() => checkTokenExpiration(accessToken), 240000);
-          } else {
-            // If the token is invalid or expired, redirect to login page
-            console.log("Token invalid or expired. Redirecting to login page.");
-            localStorage.removeItem("accessToken");
-            navigate("/admin");
-          }
-        })
-        .catch((error) => {
-          console.error("Error verifying token:", error);
-          localStorage.removeItem("accessToken");
-          navigate("/admin");
-        });
+      checkTokenExpiration(accessToken);
+      // Fetch the data
+      fetchAllShows();
+
+      // Check token expiration every 4 minutes
+      const tokenExpirationTimer = setInterval(() => {
+        checkTokenExpiration(accessToken);
+      }, 180000);
+
+      // Clear the interval when the component unmounts to avoid memory leaks
+      return () => clearInterval(tokenExpirationTimer);
+
+      // axios
+      //   .post("http://localhost:3000/api/verify-token", {
+      //     accessToken: accessToken,
+      //   })
+      //   .then((response) => {
+      //     if (response.data.valid) {
+      //       // Token is valid, fetch the data
+      //       fetchAllShows();
+      //       // Check token expiration every 4 minutes
+      //       setInterval(() => checkTokenExpiration(accessToken), 240000);
+      //     } else {
+      //       // If the token is invalid or expired, redirect to login page
+      //       console.log("Token invalid or expired. Redirecting to login page.");
+      //       localStorage.removeItem("accessToken");
+      //       navigate("/admin");
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error verifying token:", error);
+      //     localStorage.removeItem("accessToken");
+      //     navigate("/admin");
+      //   });
     }
   }, [navigate]);
 
@@ -237,6 +249,7 @@ const Show = () => {
             <th style={{ textAlign: "center" }}>Satisfaction Level</th>
             <th style={{ textAlign: "center" }}>Heard From</th>
             <th style={{ textAlign: "center" }}>Message</th>
+            <th style={{ textAlign: "center" }}>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -247,6 +260,11 @@ const Show = () => {
               <td>{show.email}</td>
               <td>{show.age}</td>
               <td>{show.contact}</td>
+
+              <td>{getSelectedLabels(show)}</td>
+              <td>{show.selected_satisfaction}</td>
+              <td>{show.selected_heard_from}</td>
+              <td>{show.message}</td>
               <td>
                 <Link to={`/edit/${show.id}`}>
                   <button className="btn btn-success">Edit</button>
@@ -261,11 +279,6 @@ const Show = () => {
                   <button className="btn btn-primary">View</button>
                 </Link>
               </td>
-
-              <td>{getSelectedLabels(show)}</td>
-              <td>{show.selected_satisfaction}</td>
-              <td>{show.selected_heard_from}</td>
-              <td>{show.message}</td>
             </tr>
           ))}
         </tbody>
