@@ -8,20 +8,14 @@ const Edit = () => {
   const [formData, setFormData] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
+
   //countryData.json bata countries ko state set
   const [countries, setCountries] = useState(CountryData);
-  //searchCode le just code
-  const [searchCode, setSearchCode] = useState();
+  //Or we could have simply used CountryData.find instead of useState and dependency
+
   //countryCode le dial_code
   const [countryCode, setCountryCode] = React.useState("");
 
-  //searchCountry ma json data ma vako code ra eta user le droopdown bata select gareko searchCode which is just code word  lai compare hancha
-  // const searchCountry = countries.find((obj) => {
-  //   if (obj.code === searchCode) {
-  //     return true;
-  //   }
-  //   return false;
-  // });
   const searchCountry = countries.find((obj) => {
     if (obj.dial_code === countryCode) {
       return true;
@@ -29,28 +23,11 @@ const Edit = () => {
     return false;
   });
 
-  // const findSelectedCountry = (countryCode) => {
-  //   // Find the country object that matches the given countryCode
-  //   const selectedCountry = countries.find(
-  //     (country) => country.dial_code === countryCode
-  //   );
-  //   return selectedCountry || {}; // Return an empty object if not found
-  // };
-
-  // const handleCountryChange = (code) => {
-  //   setCountries(CountryData);
-
-  //   // Update the country code in the phone input
-  //   setCountryCode(code);
-  //   setSearchCode(code);
-  // };
-
   const handleCountryChange = (dial_code) => {
     setCountries(CountryData);
 
     // Update the country code in the phone input
     setCountryCode(dial_code);
-    setSearchCode(dial_code);
   };
 
   const {
@@ -100,33 +77,9 @@ const Edit = () => {
 
         setSelected_satisfaction(response.data.selected_satisfaction);
         setSelected_heard_from(response.data.selected_heard_from);
-        // setSearchCode(response.data.countryCode);
-        //setCountries(response.data.countryCode);
-        // setSelected(response.data.country);
+
         setCountryCode(response.data.countryCode);
-
         // console.log(countries);
-
-        // CountryData.find((obj) => {
-        //   if (obj.dial_code === response.data.countryCode) {
-        //     console.log(obj.code);
-        //     setSearchCode(obj.code);
-        //     return true;
-        //   }
-        //   return false;
-        // });
-
-        // const selectedCountry = findSelectedCountry(response.data.countryCode);
-
-        // CountryData.find((obj) => {
-        //   if (obj.dial_code === response.data.countryCode) {
-        //     console.log(obj.dial_code);
-        //     setCountryCode(obj.dial_code);
-        //     return true;
-        //   }
-        //   return false;
-        // });
-        //console.log("abc", abc, selected);
       })
       .catch((error) => {
         console.error("Error fetching form data:", error);
@@ -135,7 +88,6 @@ const Edit = () => {
 
   const onSubmit = (data) => {
     // Perform the update operation to the backend API using Axios
-
     data.selected_satisfaction = selected_satisfaction;
     data.selected_heard_from = selected_heard_from;
     data.country = searchCountry.name; // Add the selected country name
@@ -145,8 +97,6 @@ const Edit = () => {
       .put(`http://localhost:3000/api/data/${id}`, data)
       .then((response) => {
         navigate("/show");
-
-        // console.log("abc", abc, selected);
       })
       .catch((error) => {
         console.error("Error updating data:", error);
@@ -262,9 +212,6 @@ const Edit = () => {
                   {countries.map((item) => {
                     return (
                       <option
-                        // key={uuidv4()}
-                        // key={item.code}
-                        // value={item.code}
                         key={item.dial_code}
                         value={item.dial_code}
                         //selected={item.code === countryCode ? "selected" : ""}
