@@ -8,26 +8,49 @@ const Edit = () => {
   const [formData, setFormData] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
-
+  //countryData.json bata countries ko state set
   const [countries, setCountries] = useState(CountryData);
-
+  //searchCode le just code
   const [searchCode, setSearchCode] = useState();
+  //countryCode le dial_code
+  const [countryCode, setCountryCode] = React.useState("");
 
+  //searchCountry ma json data ma vako code ra eta user le droopdown bata select gareko searchCode which is just code word  lai compare hancha
+  // const searchCountry = countries.find((obj) => {
+  //   if (obj.code === searchCode) {
+  //     return true;
+  //   }
+  //   return false;
+  // });
   const searchCountry = countries.find((obj) => {
-    if (obj.code === searchCode) {
+    if (obj.dial_code === countryCode) {
       return true;
     }
     return false;
   });
 
-  const [countryCode, setCountryCode] = React.useState("DE");
+  // const findSelectedCountry = (countryCode) => {
+  //   // Find the country object that matches the given countryCode
+  //   const selectedCountry = countries.find(
+  //     (country) => country.dial_code === countryCode
+  //   );
+  //   return selectedCountry || {}; // Return an empty object if not found
+  // };
 
-  const handleCountryChange = (code) => {
+  // const handleCountryChange = (code) => {
+  //   setCountries(CountryData);
+
+  //   // Update the country code in the phone input
+  //   setCountryCode(code);
+  //   setSearchCode(code);
+  // };
+
+  const handleCountryChange = (dial_code) => {
     setCountries(CountryData);
 
     // Update the country code in the phone input
-    setCountryCode(code);
-    setSearchCode(code);
+    setCountryCode(dial_code);
+    setSearchCode(dial_code);
   };
 
   const {
@@ -41,22 +64,6 @@ const Edit = () => {
   const [selected_satisfaction, setSelected_satisfaction] = React.useState("");
   const [selected_heard_from, setSelected_heard_from] = React.useState("");
 
-  // const CountrySelect = ({ value, onChange, labels, ...rest }) => (
-  //   <select
-  //     {...rest}
-  //     value={value}
-  //     onChange={(event) => {
-  //       onChange(event.target.value || undefined);
-  //     }}
-  //   >
-  //     <option value="">country</option>
-  //     {getCountries().map((country) => (
-  //       <option key={country} value={country}>
-  //         {labels[country]} +{getCountryCallingCode(country)}
-  //       </option>
-  //     ))}
-  //   </select>
-  // );
   const labelStyle = {
     marginRight: "10px",
   };
@@ -65,12 +72,6 @@ const Edit = () => {
     display: "flex",
     alignItems: "center",
   };
-
-  // const en = {
-  //   NP: "Nepal",
-  //   DE: "Germany",
-  //   // Add more country labels as needed...
-  // };
 
   const handleSatisfactionChange = (value) => {
     setSelected_satisfaction(value);
@@ -96,27 +97,35 @@ const Edit = () => {
         setValue("stand_out", response.data.stand_out);
 
         setValue("message", response.data.message);
-        // Set other form field values similarly
-        // Set selected values for radio buttons
-        // console.log("Satisfaction:", response.data.selected_satisfaction);
-        // console.log("Heard From:", response.data.selected_heard_from);
+
         setSelected_satisfaction(response.data.selected_satisfaction);
         setSelected_heard_from(response.data.selected_heard_from);
         // setSearchCode(response.data.countryCode);
-        //setCountries(response.data.country);
+        //setCountries(response.data.countryCode);
         // setSelected(response.data.country);
         setCountryCode(response.data.countryCode);
 
         // console.log(countries);
 
-        CountryData.find((obj) => {
-          if (obj.dial_code === response.data.countryCode) {
-            console.log(obj.code);
-            setSearchCode(obj.code);
-            return true;
-          }
-          return false;
-        });
+        // CountryData.find((obj) => {
+        //   if (obj.dial_code === response.data.countryCode) {
+        //     console.log(obj.code);
+        //     setSearchCode(obj.code);
+        //     return true;
+        //   }
+        //   return false;
+        // });
+
+        // const selectedCountry = findSelectedCountry(response.data.countryCode);
+
+        // CountryData.find((obj) => {
+        //   if (obj.dial_code === response.data.countryCode) {
+        //     console.log(obj.dial_code);
+        //     setCountryCode(obj.dial_code);
+        //     return true;
+        //   }
+        //   return false;
+        // });
         //console.log("abc", abc, selected);
       })
       .catch((error) => {
@@ -238,9 +247,10 @@ const Edit = () => {
             <div className="row g-0">
               <div className="col-12">
                 <select
-                  value={searchCode}
+                  //value={searchCode}
+                  value={countryCode}
                   onChange={(e) => {
-                    setSearchCode(e.target.value);
+                    //setSearchCode(e.target.value);
                     handleCountryChange(e.target.value);
                   }}
                   className="h-14 text-xl rounded-lg m-3 col-md-6"
@@ -253,9 +263,11 @@ const Edit = () => {
                     return (
                       <option
                         // key={uuidv4()}
-                        key={item.code}
-                        value={item.code}
-                        selected={item.code === countryCode ? "selected" : ""}
+                        // key={item.code}
+                        // value={item.code}
+                        key={item.dial_code}
+                        value={item.dial_code}
+                        //selected={item.code === countryCode ? "selected" : ""}
                       >
                         {item.name}{" "}
                       </option>
